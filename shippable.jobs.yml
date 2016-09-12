@@ -44,7 +44,7 @@ jobs:
   - name: deploy-ecs-signup
     type: deploy
     steps:
-      - IN: ecs-demo-signup-man-man
+      - IN: ecs-demo-signup-man
       - IN: env-test-ecs
       - TASK: managed
         deployMethod: upgrade
