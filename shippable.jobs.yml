@@ -6,27 +6,8 @@ jobs:
 
 # add visualizer pipeline workflow thru hub
 
-# manifest gen for VISUALIZER
-  - name: dv-man
-    type: manifest
-    steps:
-      - IN: dv-img
-      - IN: dv-img-opts
-      - IN: trigger-test-deploy-dv
-      - TASK: managed
-
 # deploy visualizer to TEST
 
-# TEST deployment for VISUALIZER to Amazon ECS
-  - name: dv-test-ecs
-    type: deploy
-    steps:
-      - IN: dv-man
-      - IN: dv-params
-        applyTo: dv-img
-      - IN: trigger-test-deploy-dv
-      - IN: env-test-ecs
-      - TASK: managed
 
 # # TEST deployment for VISUALIZER to Docker Datacenter
 #   - name: dv-test-ddc
