@@ -1,0 +1,95 @@
+jobs:
+
+# jobs for the box demo pipelines from CI thru TEST environment
+
+################################
+
+# add visualizer pipeline workflow thru hub
+
+# manifest gen for VISUALIZER
+  - name: dv-man
+    type: manifest
+    steps:
+      - IN: dv-img
+      - IN: dv-img-opts
+      - IN: trigger-test-deploy-dv
+      - TASK: managed
+
+# deploy visualizer to TEST
+
+# TEST deployment for VISUALIZER to Amazon ECS
+  - name: dv-test-ecs
+    type: deploy
+    steps:
+      - IN: dv-man
+      - IN: dv-params
+        applyTo: dv-img
+      - IN: trigger-test-deploy-dv
+      - IN: env-test-ecs
+      - TASK: managed
+
+# # TEST deployment for VISUALIZER to Docker Datacenter
+#   - name: dv-test-ddc
+#     type: deploy
+#     steps:
+#       - IN: dv-man
+#       - IN: dv-params
+#         applyTo: dv-img
+#       - IN: trigger-test-deploy-dv
+#       - IN: env-test-ddc
+#       - TASK: managed
+
+# # TEST deployment for VISUALIZER to Joyent Triton
+#   - name: dv-test-triton
+#     type: deploy
+#     steps:
+#       - IN: dv-man
+#       - IN: dv-params
+#         applyTo: dv-img
+#       - IN: env-test-triton
+#       - IN: trigger-test-deploy-dv
+#       - TASK: managed
+
+# ################################
+
+# manifest gen for BOX
+  - name: ecs-demo-signup-man
+    type: manifest
+    steps:
+      - IN: ecs-demo-signup
+      - TASK: managed
+
+# TEST deployment for BOX to Amazon ECS
+  - name: deploy-ecs-signup
+    type: deploy
+    steps:
+      - IN: ecs-demo-signup-man-man
+      - IN: env-test-ecs
+      - TASK: managed
+        deployMethod: upgrade
+
+# # TEST deployment for BOX to Docker Datacenter
+#   - name: box-test-ddc
+#     type: deploy
+#     steps:
+#       - IN: box-man
+#       - IN: box-t-params
+#       - IN: trigger-test-deploy-box
+#       - IN: env-test-ddc
+#       - IN: box-t-ddc-params
+#       - TASK: managed
+#         deployMethod: upgrade
+
+# # TEST deployment for BOX to Joyent Triton
+#   - name: box-test-triton
+#     type: deploy
+#     steps:
+#       - IN: box-man
+#       - IN: box-t-params
+#       - IN: box-t-tpc-params
+#       - IN: trigger-test-deploy-box
+#       - IN: env-test-triton
+#       - TASK: managed
+#         method: upgrade
+#
+# # ################################

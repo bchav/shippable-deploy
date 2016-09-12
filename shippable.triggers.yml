@@ -1,0 +1,9 @@
+#triggers:
+#  - name: trigger-test-deploy-dv
+#    version:
+#      message: 'testing trigger in test 2'
+#
+#  - name: trigger-test-deploy-box
+#    type: trigger
+#    version:
+#      counter: 10

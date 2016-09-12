@@ -1,0 +1,81 @@
+resources:
+
+# resources for the box demo pipelines from CI thru TEST environment
+
+################################
+
+# add TEST environment
+
+# add TEST env - AWS cluster
+  - name: env-test-ecs
+    type: cluster
+    integration: AWS-ECS
+    pointer:
+      sourceName : " Summit-EcsCluster-L34BRRGFEYI5"
+      region: "us-west-2"
+
+# # add TEST env - Docker Datacenter
+#   - name: env-test-ddc
+#     type: cluster
+#     integration: ttrahan-ddc
+#     pointer:
+#       sourceName : "demo-shippable-ecs-test"
+#       region: "us-east-1"
+
+
+################################
+
+# set application version seed
+#  - name: demo-ver-box
+#    type: version
+#    seed:
+#      versionName: "1.0.0"
+
+################################
+
+
+# add BOX resources to pipeline
+
+# Docker Image for BOX
+  - name: ecs-demo-signup
+    type: image
+    integration: "Amazon ECR"
+    pointer:
+      sourceName: https://572384241454.dkr.ecr.us-east-1.amazonaws.com/ecs-demo-signup
+      isPull: false
+    seed:
+      versionName: master.latest
+
+# Docker Image Options for ecs-demo-signup
+  - name: box-img-opts
+    type: dockerOptions
+    version:
+      memory: 64
+      cpu-shares: 128
+
+# TEST env vars for ecs-demo-signup
+  - name: box-t-params
+    type: params
+    version:
+      params:
+        DB_HOST: "ds017544.mlab.com"
+        DB_NAME: "box-pipev2"
+        DB_PORT: 17544
+        secure: leD6nvLT1uAUEQEW6AD53NXKF2LOD6KjIbYJx0hbonI7mFwyzwHsW0OOFvR57PkbPlmRZuJKdWEe/L55vXrXcCxWtcFvuRMQ9F+9HorOUiAR45OKObS5MOJzui+0Ahj8t0Z/F54xMieF4fk8zhDkqfCrF+AK5QsAUi6UZUvK32RPApdRLR2ZZft6T6yA5TkFl7SJJn3GlifzipYnhUEF3UvZr8aivvZqhffR0uzYw0dQo2AXqCswEGSAD2jEv+kk1clBLXzTL7HCu5XpoUsLq2bNIIaH9Yqwf8T0/lRLXDqicdFm5NqnGYLLYEfdluBz6bzWyZ0D1t5sYiIamU9EzQ==
+
+# TEST env vars for BOX for Amazon ECS
+  - name: box-t-ecs-params
+    type: params
+    version:
+      params:
+        ENVIRONMENT: "test-ecs"
+
+# # TEST env vars for BOX for Docker Datacenter
+#   - name: box-t-ddc-params
+#     type: params
+#     version:
+#       params:
+#         ENVIRONMENT: "test-ddc"
+
+
+# ################################
