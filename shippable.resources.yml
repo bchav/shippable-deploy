@@ -11,7 +11,7 @@ resources:
     type: cluster
     integration: AWS-ECS
     pointer:
-      sourceName : " Summit-EcsCluster-L34BRRGFEYI5"
+      sourceName : "Summit-EcsCluster-L34BRRGFEYI5"
       region: "us-west-2"
 
 # # add TEST env - Docker Datacenter
